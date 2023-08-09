@@ -33,3 +33,5 @@ git push --tags
 ```console
 go get github.com/Kiyosh31/e-commerce-microservice-common
 ```
+
+Or you can use `Makefile` created in root folder but you will need to increment the tag version at hand
