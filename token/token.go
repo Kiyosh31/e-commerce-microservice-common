@@ -1,7 +1,7 @@
 package token
 
 import (
-	"errors"
+	"fmt"
 	"time"
 
 	"github.com/golang-jwt/jwt"
@@ -29,8 +29,7 @@ func GenerateToken(duration time.Duration, payload interface{}, secretJWTKey str
 func ValidateToken(token string, signedJWTKey string) (interface{}, error) {
 	tok, err := jwt.Parse(token, func(jwtToken *jwt.Token) (interface{}, error) {
 		if _, ok := jwtToken.Method.(*jwt.SigningMethodHMAC); !ok {
-			err := errors.New("Unexpected method: %s", jwtToken.Header['alg'])
-			return nil, err
+			return nil, fmt.Errorf("Unexpected method: %s", jwtToken.Header["alg"])
 		}
 
 		return []byte(signedJWTKey), nil
@@ -42,9 +41,8 @@ func ValidateToken(token string, signedJWTKey string) (interface{}, error) {
 
 	claims, ok := tok.Claims.(jwt.MapClaims)
 	if !ok || !tok.Valid {
-		err := errors.New("Invalid token claim")
-		return nil, errr
+		return nil, fmt.Errorf("Invalid token claim")
 	}
 
-	return claims["sub", nil]
+	return claims["sub"], nil
 }
