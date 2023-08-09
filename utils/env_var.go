@@ -1,15 +1,15 @@
 package utils
 
 import (
-	"fmt"
+	"errors"
 	"os"
 )
 
 func GetEnvVar(envVar string) (string, error) {
 	value := os.Getenv(envVar)
 	if value == "" {
-		return "",
-			fmt.Errorf("You must provide" + envVar + "in environment variables")
+		err := errors.New("You must provide" + envVar + "in environment variables")
+		return "", err
 	}
 
 	return value, nil
