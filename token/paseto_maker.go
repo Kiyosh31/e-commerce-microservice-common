@@ -35,7 +35,7 @@ func (m *PasetoMaker) CreateToken(userId string, duration time.Duration) (string
 	return m.paseto.Encrypt(m.symmetrycKey, payload, nil)
 }
 
-func (m *PasetoMaker) VeryfiToken(token string) (*Payload, error) {
+func (m *PasetoMaker) VerifyToken(token string) (*Payload, error) {
 	payload := &Payload{}
 
 	err := m.paseto.Decrypt(token, m.symmetrycKey, payload, nil)

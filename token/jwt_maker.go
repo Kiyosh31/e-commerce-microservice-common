@@ -32,7 +32,7 @@ func (m *JWTMaker) CreateToken(userId string, duration time.Duration) (string, e
 	return jwtToken.SignedString([]byte(m.secretKey))
 }
 
-func (m *JWTMaker) VeryfiToken(token string) (*Payload, error) {
+func (m *JWTMaker) VerifyToken(token string) (*Payload, error) {
 	keyFunc := func(token *jwt.Token) (interface{}, error) {
 		_, ok := token.Method.(*jwt.SigningMethodHMAC)
 		if !ok {
