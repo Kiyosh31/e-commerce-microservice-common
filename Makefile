@@ -1,3 +1,3 @@
 tag:
-	@git tag "v.1.10"
+	@git tag "v1.0.10"
 	@git push --tag
