@@ -1,4 +1,4 @@
-package utils
+package httplogger
 
 import (
 	"io"
@@ -11,7 +11,7 @@ import (
 
 var file *os.File
 
-func createLogFolder() {
+func createLogsFolder() {
 	newpath := filepath.Join(".", "logs")
 	err := os.MkdirAll(newpath, os.ModePerm)
 	if err != nil {
@@ -41,8 +41,8 @@ func CreatePrefix(prefix string) string {
 	return "[" + prefix + "]: "
 }
 
-func NewLogger() *logrus.Logger {
-	createLogFolder()
+func CreateHttpLogger() *logrus.Logger {
+	createLogsFolder()
 	createLogsFile()
 
 	logger := &logrus.Logger{
