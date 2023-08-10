@@ -14,8 +14,6 @@ import (
 func NewGrpcLogger(ctx context.Context, req interface{}, info *grpc.UnaryServerInfo, handler grpc.UnaryHandler) (resp interface{}, err error) {
 	startTime := time.Now()
 
-	log.Info().Msg("Incoming request...")
-
 	result, err := handler(ctx, req)
 	duration := time.Since(startTime)
 
@@ -35,7 +33,6 @@ func NewGrpcLogger(ctx context.Context, req interface{}, info *grpc.UnaryServerI
 		Int("status_code", int(statusCode)).
 		Str("status_text", statusCode.String()).
 		Dur("duration", duration)
-	log.Info().Msg("Request finished...")
 
 	return result, err
 }
