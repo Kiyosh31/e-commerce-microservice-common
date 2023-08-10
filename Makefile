@@ -2,7 +2,7 @@ tag:
 	@git add .
 	@git commit -m "Changed"
 	@git push
-	@git tag "v1.0.26"
+	@git tag "v1.0.27"
 	@git push --tag
 
 tidy:
