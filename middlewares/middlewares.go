@@ -8,6 +8,7 @@ import (
 	"strings"
 
 	"github.com/Kiyosh31/e-commerce-microservice-common/env"
+	grpcvalidators "github.com/Kiyosh31/e-commerce-microservice-common/grpc_validators"
 	"github.com/Kiyosh31/e-commerce-microservice-common/token"
 	"github.com/Kiyosh31/e-commerce-microservice-common/utils"
 	"github.com/gin-gonic/gin"
@@ -96,4 +97,19 @@ func AuthGrpcMiddleware(ctx context.Context, tokenSecret string) (string, error)
 	}
 
 	return userId, nil
+}
+
+func ValidateTokenMatchesUser(ctx context.Context, userId string, tokenSecret string) error {
+	// validate token
+	authPayloadUserId, err := AuthGrpcMiddleware(ctx, tokenSecret)
+	if err != nil {
+		return grpcvalidators.UnauthenticatedError(err)
+	}
+
+	// Validate it belongs to user
+	if authPayloadUserId != userId {
+		return fmt.Errorf("Cannot access/modify other user's information")
+	}
+
+	return nil
 }
