@@ -18,7 +18,7 @@ func errorResponse(err error) *gin.H {
 	return &gin.H{"Errors": err.Error()}
 }
 
-func AuthHttpMiddleware(bearerToken string, tokenSecret string) gin.HandlerFunc {
+func AuthHttpMiddleware(tokenSecret string) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		authHeader := c.Request.Header.Get(env.AuthHeaderKey)
 		fields := strings.Fields(authHeader)
