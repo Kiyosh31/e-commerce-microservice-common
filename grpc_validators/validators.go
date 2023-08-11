@@ -4,6 +4,9 @@ import (
 	"fmt"
 	"net/mail"
 	"regexp"
+
+	"google.golang.org/grpc/codes"
+	"google.golang.org/grpc/status"
 )
 
 var (
@@ -45,4 +48,8 @@ func ValidateEmail(value string) error {
 	}
 
 	return nil
+}
+
+func UnauthenticatedError(err error) error {
+	return status.Errorf(codes.Unauthenticated, "Unauthorized: %v", err)
 }
