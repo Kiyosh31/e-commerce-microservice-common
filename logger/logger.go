@@ -1,4 +1,4 @@
-package commongrpclogger
+package logger
 
 import (
 	"context"
