@@ -12,19 +12,13 @@ import (
 	"google.golang.org/grpc/status"
 )
 
-func GrpcLogger(
+func GrpcLoggerInterceptor(
 	ctx context.Context,
 	req interface{},
 	info *grpc.UnaryServerInfo,
 	handler grpc.UnaryHandler,
 ) (resp interface{}, err error) {
-	log.Info().
-		Str("protocol", "gRPC").
-		Str("method", info.FullMethod).
-		Msg("Request incoming...")
-
 	startTime := time.Now()
-
 	result, err := handler(ctx, req)
 	duration := time.Since(startTime)
 
@@ -35,16 +29,16 @@ func GrpcLogger(
 
 	logger := log.Info()
 	if err != nil {
-		logger = log.Error().Err(err)
+		logger = log.Error()
 	}
 
 	logger.
-		Str("protocol", "gRPC").
+		Str("protocol", "grpc").
 		Str("method", info.FullMethod).
 		Int("status_code", int(statusCode)).
 		Str("status_text", statusCode.String()).
 		Dur("duration", duration).
-		Msg("Received a gRPC request")
+		Msg("received a gRPC request")
 
 	return result, err
 }
